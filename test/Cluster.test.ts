@@ -20,11 +20,11 @@ const concurrencyTypes = [
 
 beforeAll(async () => {
     // test server
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
         testServer = http.createServer((req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end('<html><body>puppeteer-cluster TEST</body></html>');
-        }).listen(3001, '127.0.0.1', resolve);
+        }).listen(3001, '127.0.0.1', 511, resolve);
     });
 });
 

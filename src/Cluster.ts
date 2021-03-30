@@ -95,7 +95,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
     private startTime = Date.now();
     private nextWorkerId = -1;
 
-    private monitoringInterval: NodeJS.Timer | null = null;
+    private readonly monitoringInterval: NodeJS.Timer | null = null;
     private display: Display | null = null;
 
     private duplicateCheckUrls: Set<string> = new Set();
@@ -151,9 +151,6 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
             throw new Error(`Unknown concurrency option: ${this.options.concurrency}`);
         }
 
-        if (typeof this.options.maxConcurrency !== 'number') {
-            throw new Error('maxConcurrency must be of number type');
-        }
         if (this.options.perBrowserOptions
             && this.options.perBrowserOptions.length !== this.options.maxConcurrency) {
             throw new Error('perBrowserOptions length must equal maxConcurrency');
@@ -199,8 +196,6 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
         }
 
         const worker = new Worker<JobData, ReturnData>({
-            cluster: this,
-            args: [''], // this.options.args,
             browser: workerBrowserInstance,
             id: workerId,
         });

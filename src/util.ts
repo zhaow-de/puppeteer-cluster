@@ -1,4 +1,3 @@
-
 import * as Debug from 'debug';
 
 interface TimeUnit {
@@ -87,8 +86,7 @@ export async function timeoutExecute<T>(millis: number, promise: Promise<T>): Pr
 }
 
 export function debugGenerator(namespace: string): Debug.IDebugger {
-    const debug = Debug(`puppeteer-cluster: ${namespace}`);
-    return debug;
+    return Debug(`puppeteer-cluster: ${namespace}`);
 }
 
 const logToConsole = Debug('puppeteer-cluster:log');
