@@ -551,6 +551,7 @@ describe('options', () => {
     test('other puppeteer objects like puppeteer-core', async () => {
         expect.assertions(2);
 
+        // @ts-ignore
         const executablePath = puppeteer.executablePath();
         const cluster = await Cluster.launch({
             concurrency: Cluster.CONCURRENCY_BROWSER,

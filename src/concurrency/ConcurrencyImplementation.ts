@@ -1,5 +1,5 @@
 
-import { Page, LaunchOptions } from 'puppeteer';
+import { Page, LaunchOptions, BrowserLaunchArgumentOptions, BrowserConnectOptions } from 'puppeteer';
 
 /**
  * ABSTRACT CLASS Needs to be implemented to manage one or more browsers via puppeteer instances
@@ -34,7 +34,7 @@ export default abstract class ConcurrencyImplementation {
     /**
      * Creates a worker and returns it
      */
-    public abstract workerInstance(perBrowserOptions: LaunchOptions | undefined):
+    public abstract workerInstance(perBrowserOptions: LaunchOptions & BrowserLaunchArgumentOptions & BrowserConnectOptions | undefined):
         Promise<WorkerInstance>;
 
 }
