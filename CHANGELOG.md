@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.23.0] - 2021-03-30
+## [0.24.0] - 2021-03-30
 ### Changed
 - Updated dependencies to their latest versions
     - In particular the devDependencies  `puppeteer` and `puppeteer-core` received a major upgrade (to version `8`)
