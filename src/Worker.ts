@@ -82,7 +82,7 @@ export default class Worker<JobData, ReturnData> {
                     },
                 }),
             );
-        } catch (err) {
+        } catch (err: any) {
             errorState = err;
             log(`Error crawling ${inspect(job.data)} // message: ${err.message}`);
         }
@@ -91,8 +91,8 @@ export default class Worker<JobData, ReturnData> {
 
         try {
             await jobInstance.close();
-        } catch (e) {
-            debug(`Error closing browser instance for ${inspect(job.data)}: ${e.message}`);
+        } catch (err: any) {
+            debug(`Error closing browser instance for ${inspect(job.data)}: ${err.message}`);
             await this.browser.repair();
         }
 
@@ -104,7 +104,7 @@ export default class Worker<JobData, ReturnData> {
         for (let attempt = 0; attempt < BROWSER_INSTANCE_TRIES; attempt += 1) {
             try {
                 return await this.browser.jobInstance();
-            } catch (err) {
+            } catch (err: any) {
                 debug(`Error getting browser page (try: ${attempt}), message: ${err.message}`);
                 await this.browser.repair();
             }
@@ -116,7 +116,7 @@ export default class Worker<JobData, ReturnData> {
     public async close(): Promise<void> {
         try {
             await this.browser.close();
-        } catch (err) {
+        } catch (err: any) {
             debug(`Unable to close worker browser. Error message: ${err.message}`);
         }
         debug(`Closed #${this.id}`);

@@ -161,7 +161,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
 
         try {
             await this.browser.init();
-        } catch (err) {
+        } catch (err: any) {
             throw new Error(`Unable to launch browser, error message: ${err.message}`);
         }
 
@@ -191,7 +191,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
         try {
             workerBrowserInstance = await (this.browser as ConcurrencyImplementation)
                 .workerInstance(nextWorkerOption);
-        } catch (err) {
+        } catch (err: any) {
             throw new Error(`Unable to launch browser for worker, error message: ${err.message}`);
         }
 
@@ -317,7 +317,9 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
             (jobFunction as TaskFunction<JobData, ReturnData>),
             job,
             this.options.timeout,
-        );
+        ).catch((err) => {
+            return { type: 'error', error: err };
+        });
 
         if (result.type === 'error') {
             if (job.executeCallbacks) {
@@ -449,7 +451,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
 
         try {
             await (this.browser as ConcurrencyImplementation).close();
-        } catch (err) {
+        } catch (err: any) {
             debug(`Error: Unable to close browser, message: ${err.message}`);
         }
 

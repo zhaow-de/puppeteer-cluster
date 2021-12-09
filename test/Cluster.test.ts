@@ -241,7 +241,7 @@ describe('options', () => {
                     await timeoutExecute(200, (async () => {
                         await cluster.waitForOne(); // should time out!
                     })());
-                } catch (err) {
+                } catch (err: any) {
                     expect(err.message).toMatch(/Timeout/);
                 }
 
@@ -477,9 +477,9 @@ describe('options', () => {
                 try {
                     const value1 = await cluster.execute('executed');
                     expect(1).toBe(2); // fail, should never reach this point
-                } catch (e) {
+                } catch (err: any) {
                     // execute is catched in here
-                    expect(e.message).toBe('executed');
+                    expect(err.message).toBe('executed');
                 }
                 cluster.queue('queued');
 

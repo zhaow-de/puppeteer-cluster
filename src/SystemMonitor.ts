@@ -47,6 +47,7 @@ export default class SystemMonitor {
         let totalTick = 0;
         const cpus = os.cpus();
 
+        /* istanbul ignore next */
         if (!cpus) {
             // In some environments, os.cpus() might return undefined (although it's not stated in
             // the Node.js docs), see #113 for more information
