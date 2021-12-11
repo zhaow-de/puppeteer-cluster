@@ -1,6 +1,6 @@
 {
   "name": "@zhaow-de/puppeteer-cluster",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Cluster management for puppeteer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "debug": "^4.3.3"
   },
   "peerDependencies": {
-    "puppeteer": "^12.0.1"
+    "puppeteer": "^13.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
@@ -34,13 +34,13 @@
     "@types/node": "^16.11.12",
     "coveralls": "^3.1.1",
     "express": "^4.17.1",
-    "jest": "^27.4.3",
-    "puppeteer": "^12.0.1",
-    "puppeteer-core": "^12.0.1",
+    "jest": "^27.4.4",
+    "puppeteer": "^13.0.0",
+    "puppeteer-core": "^13.0.0",
     "tree-kill": "^1.2.2",
     "ts-jest": "^27.1.1",
     "tslint": "^6.1.3",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.3"
   },
   "engines": {
     "node": ">= 16",
