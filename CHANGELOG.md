@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [upstream-0.23.0] - 2022-01-23
+## [0.30.0, upstream-0.23.0] - 2022-01-23
 ### Changed
 - Updated dependencies which haven't been updated for more than one year
 - Moved from Travis to Github Actions
