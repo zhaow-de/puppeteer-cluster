@@ -477,9 +477,9 @@ describe('options', () => {
                 try {
                     const value1 = await cluster.execute('executed');
                     expect(1).toBe(2); // fail, should never reach this point
-                } catch (err: any) {
+                } catch (e: any) {
                     // execute is catched in here
-                    expect(err.message).toBe('executed');
+                    expect(e.message).toBe('executed');
                 }
                 cluster.queue('queued');
 
@@ -551,8 +551,7 @@ describe('options', () => {
     test('other puppeteer objects like puppeteer-core', async () => {
         expect.assertions(2);
 
-        // @ts-ignore
-        const executablePath = puppeteer.executablePath();
+        const executablePath = (puppeteer as any).executablePath(); // TODO why does this not work anymore?
         const cluster = await Cluster.launch({
             concurrency: Cluster.CONCURRENCY_BROWSER,
             puppeteerOptions: {

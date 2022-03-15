@@ -1,3 +1,4 @@
+
 import * as Debug from 'debug';
 
 interface TimeUnit {
@@ -52,7 +53,7 @@ export function formatDuration(millis: number): string {
     let remaining = millis;
     let nextUnitIndex = 1;
     while (nextUnitIndex < TIME_UNITS.length &&
-            remaining / TIME_UNITS[nextUnitIndex].step >= TIME_UNIT_THRESHOLD) {
+    remaining / TIME_UNITS[nextUnitIndex].step >= TIME_UNIT_THRESHOLD) {
         remaining = remaining / TIME_UNITS[nextUnitIndex].step;
         nextUnitIndex += 1;
     }
@@ -74,7 +75,7 @@ export async function timeoutExecute<T>(millis: number, promise: Promise<T>): Pr
         (async () => {
             try {
                 return await promise;
-            } catch (error) {
+            } catch (error: any) {
                 // Cancel timeout in error case
                 clearTimeout(timeout as any as NodeJS.Timer);
                 throw error;
@@ -86,7 +87,8 @@ export async function timeoutExecute<T>(millis: number, promise: Promise<T>): Pr
 }
 
 export function debugGenerator(namespace: string): Debug.IDebugger {
-    return Debug(`puppeteer-cluster: ${namespace}`);
+    const debug = Debug(`puppeteer-cluster: ${namespace}`);
+    return debug;
 }
 
 const logToConsole = Debug('puppeteer-cluster:log');

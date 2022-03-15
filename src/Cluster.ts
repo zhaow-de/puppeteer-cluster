@@ -6,7 +6,7 @@ import Worker, { WorkResult } from './Worker';
 
 import * as builtInConcurrency from './concurrency/builtInConcurrency';
 
-import { BrowserConnectOptions, BrowserLaunchArgumentOptions, LaunchOptions, Page } from 'puppeteer';
+import type { Page, PuppeteerNodeLaunchOptions } from 'puppeteer';
 import Queue from './Queue';
 import SystemMonitor from './SystemMonitor';
 import { EventEmitter } from 'events';
@@ -19,8 +19,8 @@ interface ClusterOptions {
     concurrency: number | ConcurrencyImplementationClassType;
     maxConcurrency: number;
     workerCreationDelay: number;
-    puppeteerOptions: LaunchOptions & BrowserLaunchArgumentOptions & BrowserConnectOptions;
-    perBrowserOptions: LaunchOptions & BrowserLaunchArgumentOptions & BrowserConnectOptions[] | undefined;
+    puppeteerOptions: PuppeteerNodeLaunchOptions;
+    perBrowserOptions: PuppeteerNodeLaunchOptions[] | undefined;
     monitor: boolean;
     timeout: number;
     retryLimit: number;
@@ -76,7 +76,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
     static CONCURRENCY_BROWSER = 3; // no cookie sharing and individual processes (uses contexts)
 
     private options: ClusterOptions;
-    private perBrowserOptions: LaunchOptions & BrowserLaunchArgumentOptions & BrowserConnectOptions[] | null = null;
+    private perBrowserOptions: PuppeteerNodeLaunchOptions[] | null = null;
     private workers: Worker<JobData, ReturnData>[] = [];
     private workersAvail: Worker<JobData, ReturnData>[] = [];
     private workersBusy: Worker<JobData, ReturnData>[] = [];
@@ -95,7 +95,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
     private startTime = Date.now();
     private nextWorkerId = -1;
 
-    private readonly monitoringInterval: NodeJS.Timer | null = null;
+    private monitoringInterval: NodeJS.Timer | null = null;
     private display: Display | null = null;
 
     private duplicateCheckUrls: Set<string> = new Set();
@@ -151,6 +151,9 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
             throw new Error(`Unknown concurrency option: ${this.options.concurrency}`);
         }
 
+        if (typeof this.options.maxConcurrency !== 'number') {
+            throw new Error('maxConcurrency must be of number type');
+        }
         if (this.options.perBrowserOptions
             && this.options.perBrowserOptions.length !== this.options.maxConcurrency) {
             throw new Error('perBrowserOptions length must equal maxConcurrency');
@@ -196,6 +199,8 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
         }
 
         const worker = new Worker<JobData, ReturnData>({
+            cluster: this,
+            args: [''], // this.options.args,
             browser: workerBrowserInstance,
             id: workerId,
         });
@@ -317,9 +322,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
             (jobFunction as TaskFunction<JobData, ReturnData>),
             job,
             this.options.timeout,
-        ).catch((err) => {
-            return { type: 'error', error: err };
-        });
+        );
 
         if (result.type === 'error') {
             if (job.executeCallbacks) {

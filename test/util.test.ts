@@ -83,8 +83,8 @@ describe('timeoutExecute', () => {
                 new Promise(resolve => setTimeout(resolve, 50)),
             );
             fail();
-        } catch (err: any) {
-            expect(err.message).toEqual(expect.stringContaining('Timeout'));
+        } catch (e: any) {
+            expect(e.message).toEqual(expect.stringContaining('Timeout'));
         }
     });
 

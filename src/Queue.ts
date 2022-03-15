@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+
 interface QueueOptions {
     delayUntil?: number;
 }
