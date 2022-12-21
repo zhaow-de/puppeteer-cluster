@@ -1,6 +1,6 @@
 {
   "name": "@zhaow-de/puppeteer-cluster",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "description": "Cluster management for puppeteer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
