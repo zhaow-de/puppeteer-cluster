@@ -1,6 +1,6 @@
 {
   "name": "@zhaow-de/puppeteer-cluster",
-  "version": "0.34.0",
+  "version": "0.35.0",
   "description": "Cluster management for puppeteer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
     "debug": "^4.3.4"
   },
   "peerDependencies": {
-    "puppeteer": "^18.2.1"
+    "puppeteer": "^19.4.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
